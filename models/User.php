@@ -16,6 +16,7 @@ use yii\web\IdentityInterface;
  * @property string $created
  * @property integer $active
  * @property integer $deleted
+ * @property integer $role_id
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -62,7 +63,7 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             [['username', 'password', 'auth_key', 'access_token'], 'required'],
             [['created'], 'safe'],
-            [['active', 'deleted'], 'integer'],
+            [['active', 'deleted', 'role_id'], 'integer'],
             [['username', 'password', 'auth_key', 'access_token'], 'string', 'max' => 255],
             [['username'], 'unique'],
         ];
@@ -82,6 +83,7 @@ class User extends ActiveRecord implements IdentityInterface
             'created' => 'Created',
             'active' => 'Active',
             'deleted' => 'Deleted',
+            'role_id' => 'Role',
         ];
     }
 
