@@ -53,14 +53,14 @@ class Notice extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'code' => 'Code',
-            'from_user_id' => 'From User ID',
-            'to_user_id' => 'To User ID',
-            'title' => 'Title',
-            'text' => 'Text',
-            'type' => 'Type',
-            'created' => 'Created',
+            'name' => 'Название',
+            'code' => 'Код события',
+            'from_user_id' => 'От кого',
+            'to_user_id' => 'Кому',
+            'title' => 'Заголовок',
+            'text' => 'Текст',
+            'type' => 'Тип уведомления',
+            'created' => 'Дата создания',
         ];
     }
 

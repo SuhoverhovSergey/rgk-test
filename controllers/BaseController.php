@@ -31,7 +31,7 @@ class BaseController extends Controller
                         'roles' => [Role::ROLE_USER],
                     ],
                     [
-                        'controllers' => ['article'],
+                        'controllers' => ['article', 'notice'],
                         'allow' => true,
                         'roles' => [Role::ROLE_ADMIN],
                     ],

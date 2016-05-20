@@ -42,6 +42,7 @@ AppAsset::register($this);
     ];
     if (!$user->isGuest && $identityUser->role_id == \app\models\Role::ROLE_ADMIN) {
         $menuItems[] = ['label' => 'Article', 'url' => ['/article/index']];
+        $menuItems[] = ['label' => 'Notice', 'url' => ['/notice/index']];
     }
     $menuItems[] = $user->isGuest ? (
         ['label' => 'Login', 'url' => ['/site/login']]
