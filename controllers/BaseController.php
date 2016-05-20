@@ -3,7 +3,6 @@
 namespace app\controllers;
 
 use yii\web\Controller;
-use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use app\models\Role;
 use app\filters\AccessRule;
@@ -18,20 +17,24 @@ class BaseController extends Controller
                 'ruleConfig' => [
                     'class' => AccessRule::className(),
                 ],
-                'only' => ['logout'],
                 'rules' => [
                     [
                         'controllers' => ['site'],
-                        'actions' => ['logout'],
+                        'actions' => ['login'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'controllers' => ['site'],
+                        'actions' => ['index', 'logout'],
                         'allow' => true,
                         'roles' => [Role::ROLE_USER],
                     ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
+                    [
+                        'controllers' => ['article'],
+                        'allow' => true,
+                        'roles' => [Role::ROLE_ADMIN],
+                    ],
                 ],
             ],
         ];

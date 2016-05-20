@@ -27,29 +27,38 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'Test',
+        'brandLabel' => 'Notification System',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
+
+    $user = Yii::$app->user;
+    $identityUser = $user->identity;
+
+    $menuItems = [
+        ['label' => 'Home', 'url' => ['/site/index']],
+    ];
+    if (!$user->isGuest && $identityUser->role_id == \app\models\Role::ROLE_ADMIN) {
+        $menuItems[] = ['label' => 'Article', 'url' => ['/article/index']];
+    }
+    $menuItems[] = $user->isGuest ? (
+        ['label' => 'Login', 'url' => ['/site/login']]
+    ) : (
+        '<li>'
+        . Html::beginForm(['/site/logout'], 'post', ['class' => 'navbar-form'])
+        . Html::submitButton(
+            'Logout (' . $identityUser->username . ')',
+            ['class' => 'btn btn-link']
+        )
+        . Html::endForm()
+        . '</li>'
+    );
+
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post', ['class' => 'navbar-form'])
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link']
-                )
-                . Html::endForm()
-                . '</li>'
-            )
-        ],
+        'items' => $menuItems,
     ]);
     NavBar::end();
     ?>
