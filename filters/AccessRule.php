@@ -23,7 +23,7 @@ class AccessRule extends \yii\filters\AccessRule
                 if (!$user->getIsGuest()) {
                     return true;
                 }
-            } elseif ($role == $user->getIdentity()->role_id) {
+            } elseif (!$user->getIsGuest() && $role == $user->getIdentity()->role_id) {
                 return true;
             } elseif ($user->can($role)) {
                 return true;
