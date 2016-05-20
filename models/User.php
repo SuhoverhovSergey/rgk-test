@@ -11,8 +11,8 @@ use yii\web\IdentityInterface;
  * @property integer $id
  * @property string $username
  * @property string $password
- * @property string $authKey
- * @property string $accessToken
+ * @property string $auth_key
+ * @property string $access_token
  * @property string $created
  * @property integer $active
  * @property integer $deleted
@@ -40,7 +40,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        return static::findOne(['accessToken' => $token]);
+        return static::findOne(['access_token' => $token]);
     }
 
     /**
@@ -60,10 +60,10 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'password', 'authKey', 'accessToken'], 'required'],
+            [['username', 'password', 'auth_key', 'access_token'], 'required'],
             [['created'], 'safe'],
             [['active', 'deleted'], 'integer'],
-            [['username', 'password', 'authKey', 'accessToken'], 'string', 'max' => 255],
+            [['username', 'password', 'auth_key', 'access_token'], 'string', 'max' => 255],
             [['username'], 'unique'],
         ];
     }
@@ -77,8 +77,8 @@ class User extends ActiveRecord implements IdentityInterface
             'id' => 'ID',
             'username' => 'Username',
             'password' => 'Password',
-            'authKey' => 'Auth Key',
-            'accessToken' => 'Access Token',
+            'auth_key' => 'Auth Key',
+            'access_token' => 'Access Token',
             'created' => 'Created',
             'active' => 'Active',
             'deleted' => 'Deleted',
@@ -89,8 +89,8 @@ class User extends ActiveRecord implements IdentityInterface
     {
         if (parent::beforeSave($insert)) {
             if ($this->isNewRecord) {
-                $this->authKey = \Yii::$app->security->generateRandomString();
-                $this->accessToken = \Yii::$app->security->generateRandomString();
+                $this->auth_key = \Yii::$app->security->generateRandomString();
+                $this->access_token = \Yii::$app->security->generateRandomString();
             }
             return true;
         }
@@ -110,7 +110,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function getAuthKey()
     {
-        return $this->authKey;
+        return $this->auth_key;
     }
 
     /**
