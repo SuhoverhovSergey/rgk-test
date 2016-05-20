@@ -40,8 +40,8 @@ class Article extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
-            'text' => 'Text',
+            'title' => 'Заголовок',
+            'text' => 'Текст',
         ];
     }
 }
