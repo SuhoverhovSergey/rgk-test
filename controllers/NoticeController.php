@@ -3,9 +3,8 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Notice;
-use app\models\NoticeSearch;
 use yii\web\NotFoundHttpException;
+use app\models;
 
 /**
  * NoticeController implements the CRUD actions for Notice model.
@@ -18,7 +17,7 @@ class NoticeController extends BaseController
      */
     public function actionIndex()
     {
-        $searchModel = new NoticeSearch();
+        $searchModel = new models\NoticeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -46,13 +45,16 @@ class NoticeController extends BaseController
      */
     public function actionCreate()
     {
-        $model = new Notice();
+        $model = new models\Notice();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'codes' => Yii::$app->notice->prepareEventsDataForSelect(),
+                'types' => models\NoticeType::getList(),
+                'users' => models\User::getList(),
             ]);
         }
     }
@@ -72,6 +74,9 @@ class NoticeController extends BaseController
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'codes' => Yii::$app->notice->prepareEventsDataForSelect(),
+                'types' => models\NoticeType::getList(),
+                'users' => models\User::getList(),
             ]);
         }
     }
@@ -93,12 +98,12 @@ class NoticeController extends BaseController
      * Finds the Notice model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Notice the loaded model
+     * @return models\Notice the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Notice::findOne($id)) !== null) {
+        if (($model = models\Notice::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

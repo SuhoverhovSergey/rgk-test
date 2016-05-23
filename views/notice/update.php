@@ -4,6 +4,9 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Notice */
+/* @var $codes array */
+/* @var $types array */
+/* @var $users array */
 
 $this->title = 'Update Notice: ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Notices', 'url' => ['index']];
@@ -16,6 +19,9 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'codes' => $codes,
+        'types' => $types,
+        'users' => $users,
     ]) ?>
 
 </div>
