@@ -54,6 +54,11 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return static::findOne(['username' => $username]);
     }
+    
+    public static function getList()
+    {
+        return self::find()->orderBy('username')->where(['active' => true, 'deleted' => false])->all();
+    }
 
     /**
      * @inheritdoc
@@ -132,6 +137,6 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function validatePassword($password)
     {
-        return $this->password === $password;
+        return $this->password === md5($password);
     }
 }
