@@ -15,13 +15,13 @@ use yii\db\ActiveRecord;
  * @property string $title
  * @property string $text
  * @property string $created
+ * @property array $types
  *
  * @property User $toUser
  * @property User $fromUser
  */
 class Notice extends ActiveRecord
 {
-    protected $types;
     /**
      * @var array
      */
@@ -52,7 +52,7 @@ class Notice extends ActiveRecord
             [['name', 'code', 'from_user_id', 'title', 'types'], 'required'],
             [['from_user_id', 'to_user_id'], 'integer'],
             [['text'], 'string'],
-            [['created', 'types'], 'safe'],
+            [['created'], 'safe'],
             [['name', 'code', 'title'], 'string', 'max' => 255],
             [['to_user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['to_user_id' => 'id']],
             [['from_user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['from_user_id' => 'id']],
@@ -110,6 +110,14 @@ class Notice extends ActiveRecord
     public function getTypes()
     {
         return $this->hasMany(NoticeType::className(), ['id' => 'notice_type_id'])->viaTable('notice_type_rel', ['notice_id' => 'id']);
+    }
+
+    /**
+     * @param $value
+     */
+    public function setTypes($value)
+    {
+        $this->types = $value;
     }
 
     public function updateTypes()
