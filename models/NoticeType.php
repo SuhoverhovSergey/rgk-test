@@ -22,6 +22,11 @@ class NoticeType extends ActiveRecord
         return 'notice_type';
     }
 
+    public static function getList()
+    {
+        return self::find()->orderBy('name')->all();
+    }
+
     /**
      * @inheritdoc
      */

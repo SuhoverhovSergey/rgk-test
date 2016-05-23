@@ -24,6 +24,11 @@ class NoticeTypeRel extends ActiveRecord
         return 'notice_type_rel';
     }
 
+    public static function getListByNoticeId($noticeId)
+    {
+        return self::find()->where(['notice_id' => $noticeId])->all();
+    }
+
     /**
      * @inheritdoc
      */

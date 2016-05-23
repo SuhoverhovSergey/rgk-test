@@ -21,6 +21,12 @@ use yii\db\ActiveRecord;
  */
 class Notice extends ActiveRecord
 {
+    protected $types;
+    /**
+     * @var array
+     */
+    protected static $list = [];
+
     /**
      * @inheritdoc
      */
@@ -31,7 +37,10 @@ class Notice extends ActiveRecord
 
     public static function getListByCode($code)
     {
-        return static::find()->where(['code' => $code])->orderBy('created')->all();
+        if (!isset(self::$list[$code])) {
+            self::$list[$code] = static::find()->where(['code' => $code])->orderBy('created')->all();
+        }
+        return self::$list[$code];
     }
 
     /**
@@ -40,10 +49,10 @@ class Notice extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'code', 'from_user_id', 'title'], 'required'],
+            [['name', 'code', 'from_user_id', 'title', 'types'], 'required'],
             [['from_user_id', 'to_user_id'], 'integer'],
             [['text'], 'string'],
-            [['created'], 'safe'],
+            [['created', 'types'], 'safe'],
             [['name', 'code', 'title'], 'string', 'max' => 255],
             [['to_user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['to_user_id' => 'id']],
             [['from_user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['from_user_id' => 'id']],
@@ -64,7 +73,14 @@ class Notice extends ActiveRecord
             'title' => 'Заголовок',
             'text' => 'Текст',
             'created' => 'Дата создания',
+            'types' => 'Типы',
         ];
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        $this->updateTypes();
+        parent::afterSave($insert, $changedAttributes);
     }
 
     /**
@@ -89,5 +105,27 @@ class Notice extends ActiveRecord
     public function getNoticeTypeRels()
     {
         return $this->hasMany(NoticeTypeRel::className(), ['notice_id' => 'id']);
+    }
+
+    public function getTypes()
+    {
+        return $this->hasMany(NoticeType::className(), ['id' => 'notice_type_id'])->viaTable('notice_type_rel', ['notice_id' => 'id']);
+    }
+
+    public function updateTypes()
+    {
+        NoticeTypeRel::deleteAll(['and', 'notice_id' => $this->id, ['not in', 'notice_type_id', $this->types]]);
+        $typeList = NoticeTypeRel::getListByNoticeId($this->id);
+        $exist = [];
+        foreach ($typeList as $type) {
+            $exist[] = $type->notice_type_id;
+        }
+        $newTypes = array_diff($this->types, $exist);
+        foreach ($newTypes as $typeId) {
+            $typeRel = new NoticeTypeRel();
+            $typeRel->notice_id = $this->id;
+            $typeRel->notice_type_id = $typeId;
+            $typeRel->save();
+        }
     }
 }
