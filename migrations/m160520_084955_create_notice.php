@@ -28,7 +28,8 @@ class m160520_084955_create_notice extends Migration
             'notice',
             'from_user_id',
             'user',
-            'id'
+            'id',
+            'CASCADE'
         );
 
         $this->addForeignKey(
@@ -36,7 +37,8 @@ class m160520_084955_create_notice extends Migration
             'notice',
             'to_user_id',
             'user',
-            'id'
+            'id',
+            'SET NULL'
         );
     }
 

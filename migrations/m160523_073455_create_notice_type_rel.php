@@ -23,7 +23,8 @@ class m160523_073455_create_notice_type_rel extends Migration
             'notice_type_rel',
             'notice_id',
             'notice',
-            'id'
+            'id',
+            'CASCADE'
         );
 
         $this->addForeignKey(
@@ -31,7 +32,8 @@ class m160523_073455_create_notice_type_rel extends Migration
             'notice_type_rel',
             'notice_type_id',
             'notice_type',
-            'id'
+            'id',
+            'CASCADE'
         );
     }
 
