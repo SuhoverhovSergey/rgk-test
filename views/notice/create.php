@@ -8,8 +8,8 @@ use yii\helpers\Html;
 /* @var $types array */
 /* @var $users array */
 
-$this->title = 'Create Notice';
-$this->params['breadcrumbs'][] = ['label' => 'Notices', 'url' => ['index']];
+$this->title = 'Новое уведомление';
+$this->params['breadcrumbs'][] = ['label' => 'Уведомления', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="notice-create">

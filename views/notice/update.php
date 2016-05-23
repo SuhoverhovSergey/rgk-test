@@ -8,10 +8,10 @@ use yii\helpers\Html;
 /* @var $types array */
 /* @var $users array */
 
-$this->title = 'Update Notice: ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Notices', 'url' => ['index']];
+$this->title = 'Редактирование уведомления: ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Уведомления', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Обновить';
 ?>
 <div class="notice-update">
 

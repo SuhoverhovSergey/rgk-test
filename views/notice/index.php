@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\NoticeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Notices';
+$this->title = 'Уведомления';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="notice-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Notice', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить уведомление', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -27,8 +27,22 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'name',
             'code',
-            'from_user_id',
-            'to_user_id',
+            [
+                'attribute' => 'from_user_id',
+                'value' => 'fromUser.username',
+            ],
+            [
+                'attribute' => 'to_user_id',
+                'value' => function ($data) {
+                    $value = $data->to_user_id;
+                    if (!$value) {
+                        $value = 'Всем';
+                    } else {
+                        $value = $data->toUser->username;
+                    }
+                    return $value;
+                },
+            ],
             // 'title',
             // 'text:ntext',
             // 'type',

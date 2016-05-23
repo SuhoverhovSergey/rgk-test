@@ -38,19 +38,19 @@ AppAsset::register($this);
     $identityUser = $user->identity;
 
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
+        ['label' => 'Мои уведомления', 'url' => ['/site/index']],
     ];
     if (!$user->isGuest && $identityUser->role_id == \app\models\Role::ROLE_ADMIN) {
-        $menuItems[] = ['label' => 'Article', 'url' => ['/article/index']];
-        $menuItems[] = ['label' => 'Notice', 'url' => ['/notice/index']];
+        $menuItems[] = ['label' => 'Статьи', 'url' => ['/article/index']];
+        $menuItems[] = ['label' => 'Уведомления', 'url' => ['/notice/index']];
     }
     $menuItems[] = $user->isGuest ? (
-        ['label' => 'Login', 'url' => ['/site/login']]
+        ['label' => 'Войти', 'url' => ['/site/login']]
     ) : (
         '<li>'
         . Html::beginForm(['/site/logout'], 'post', ['class' => 'navbar-form'])
         . Html::submitButton(
-            'Logout (' . $identityUser->username . ')',
+            'Выйти (' . $identityUser->username . ')',
             ['class' => 'btn btn-link']
         )
         . Html::endForm()

@@ -35,6 +35,12 @@ class BaseController extends Controller
                         'allow' => true,
                         'roles' => [Role::ROLE_ADMIN],
                     ],
+                    [
+                        'controllers' => ['article'],
+                        'actions' => ['view'],
+                        'allow' => true,
+                        'roles' => [Role::ROLE_USER],
+                    ],
                 ],
             ],
         ];
