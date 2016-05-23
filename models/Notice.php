@@ -14,7 +14,6 @@ use yii\db\ActiveRecord;
  * @property integer $to_user_id
  * @property string $title
  * @property string $text
- * @property string $type
  * @property string $created
  *
  * @property User $toUser
@@ -30,17 +29,22 @@ class Notice extends ActiveRecord
         return 'notice';
     }
 
+    public static function getListByCode($code)
+    {
+        return static::find()->where(['code' => $code])->orderBy('created')->all();
+    }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['name', 'code', 'from_user_id', 'title', 'type'], 'required'],
+            [['name', 'code', 'from_user_id', 'title'], 'required'],
             [['from_user_id', 'to_user_id'], 'integer'],
             [['text'], 'string'],
             [['created'], 'safe'],
-            [['name', 'code', 'title', 'type'], 'string', 'max' => 255],
+            [['name', 'code', 'title'], 'string', 'max' => 255],
             [['to_user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['to_user_id' => 'id']],
             [['from_user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['from_user_id' => 'id']],
         ];
@@ -59,7 +63,6 @@ class Notice extends ActiveRecord
             'to_user_id' => 'Кому',
             'title' => 'Заголовок',
             'text' => 'Текст',
-            'type' => 'Тип уведомления',
             'created' => 'Дата создания',
         ];
     }
@@ -78,5 +81,13 @@ class Notice extends ActiveRecord
     public function getFromUser()
     {
         return $this->hasOne(User::className(), ['id' => 'from_user_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getNoticeTypeRels()
+    {
+        return $this->hasMany(NoticeTypeRel::className(), ['notice_id' => 'id']);
     }
 }

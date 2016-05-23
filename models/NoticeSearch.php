@@ -5,7 +5,6 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Notice;
 
 /**
  * NoticeSearch represents the model behind the search form about `app\models\Notice`.
@@ -19,7 +18,7 @@ class NoticeSearch extends Notice
     {
         return [
             [['id', 'from_user_id', 'to_user_id'], 'integer'],
-            [['name', 'code', 'title', 'text', 'type', 'created'], 'safe'],
+            [['name', 'code', 'title', 'text', 'created'], 'safe'],
         ];
     }
 
@@ -68,8 +67,7 @@ class NoticeSearch extends Notice
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'code', $this->code])
             ->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'text', $this->text])
-            ->andFilterWhere(['like', 'type', $this->type]);
+            ->andFilterWhere(['like', 'text', $this->text]);
 
         return $dataProvider;
     }

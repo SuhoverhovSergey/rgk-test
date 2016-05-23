@@ -20,7 +20,6 @@ class m160520_084955_create_notice extends Migration
             'to_user_id' => $this->integer(),
             'title' => $this->string(255)->notNull(),
             'text' => $this->text(),
-            'type' => $this->string(255)->notNull(),
             'created' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
         ]);
 
