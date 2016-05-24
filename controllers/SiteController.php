@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\LoginForm;
+use app\models\UserNoticeSearch;
 
 class SiteController extends BaseController
 {
@@ -22,7 +23,13 @@ class SiteController extends BaseController
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $searchModel = new UserNoticeSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     public function actionLogin()

@@ -50,11 +50,12 @@ class UserNotice extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
-            'text' => 'Text',
-            'from_user_id' => 'From User ID',
+            'title' => 'Заголовок',
+            'text' => 'Текст',
+            'from_user_id' => 'От кого',
+            'fromUser.username' => 'От кого',
             'user_id' => 'User ID',
-            'created' => 'Created',
+            'created' => 'Дата отправки',
         ];
     }
 
