@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Yii;
 use yii\db\ActiveRecord;
 
 /**
@@ -13,6 +14,7 @@ use yii\db\ActiveRecord;
  * @property integer $from_user_id
  * @property integer $user_id
  * @property string $created
+ * @property boolean $viewed
  *
  * @property User $user
  * @property User $fromUser
@@ -28,6 +30,15 @@ class UserNotice extends ActiveRecord
     }
 
     /**
+     * @param $id
+     * @return array|null|UserNotice
+     */
+    public static function findById($id)
+    {
+        return self::find()->where(['id' => $id, 'user_id' => Yii::$app->user->identity->getId()])->one();
+    }
+
+    /**
      * @inheritdoc
      */
     public function rules()
@@ -36,7 +47,7 @@ class UserNotice extends ActiveRecord
             [['title', 'text', 'from_user_id', 'user_id'], 'required'],
             [['text'], 'string'],
             [['from_user_id', 'user_id'], 'integer'],
-            [['created'], 'safe'],
+            [['created', 'viewed'], 'safe'],
             [['title'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
             [['from_user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['from_user_id' => 'id']],
@@ -56,6 +67,7 @@ class UserNotice extends ActiveRecord
             'fromUser.username' => 'От кого',
             'user_id' => 'User ID',
             'created' => 'Дата отправки',
+            'viewed' => 'Прочитано',
         ];
     }
 

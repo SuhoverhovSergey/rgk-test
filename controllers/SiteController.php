@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\UserNotice;
 use Yii;
 use app\models\LoginForm;
 use app\models\UserNoticeSearch;
@@ -30,6 +31,16 @@ class SiteController extends BaseController
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    public function actionViewed($id)
+    {
+        $userNotice = UserNotice::findById($id);
+        if ($userNotice) {
+            $userNotice->viewed = true;
+            $userNotice->save();
+        }
+        return $this->redirect(['/site/index']);
     }
 
     public function actionLogin()

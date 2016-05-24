@@ -26,7 +26,13 @@ class BaseController extends Controller
                     ],
                     [
                         'controllers' => ['site'],
-                        'actions' => ['index', 'logout'],
+                        'actions' => ['index', 'logout', 'viewed'],
+                        'allow' => true,
+                        'roles' => [Role::ROLE_USER],
+                    ],
+                    [
+                        'controllers' => ['article'],
+                        'actions' => ['view'],
                         'allow' => true,
                         'roles' => [Role::ROLE_USER],
                     ],
@@ -34,12 +40,6 @@ class BaseController extends Controller
                         'controllers' => ['article', 'notice'],
                         'allow' => true,
                         'roles' => [Role::ROLE_ADMIN],
-                    ],
-                    [
-                        'controllers' => ['article'],
-                        'actions' => ['view'],
-                        'allow' => true,
-                        'roles' => [Role::ROLE_USER],
                     ],
                 ],
             ],

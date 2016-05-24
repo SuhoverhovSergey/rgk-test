@@ -19,6 +19,7 @@ class m160523_180603_create_user_notice extends Migration
             'from_user_id' => $this->integer()->notNull(),
             'user_id' => $this->integer()->notNull(),
             'created' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
+            'viewed' => $this->boolean()->notNull()->defaultValue(false),
         ]);
 
         $this->addForeignKey(

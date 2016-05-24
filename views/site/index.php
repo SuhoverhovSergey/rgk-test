@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\UserNoticeSearch */
@@ -15,28 +15,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <?= GridView::widget([
+    <?= ListView::widget([
         'dataProvider' => $dataProvider,
-        //'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'title',
-            [
-                'attribute' => 'text',
-                'format' => 'raw',
-            ],
-            'fromUser.username',
-            [
-                'attribute' => 'created',
-                'format' => ['date', 'php:d.m.Y'],
-            ],
-
-            [
-                'class' => 'yii\grid\ActionColumn',
-                'contentOptions' => ['style' => 'width: 100px;text-align: center;'],
-            ],
-        ],
+        'itemView' => '_list',
     ]); ?>
 </div>
