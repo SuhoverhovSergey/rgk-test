@@ -8,8 +8,18 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\Notice */
 /* @var $form yii\widgets\ActiveForm */
 /* @var $codes array */
+/* @var $codeParams array */
 /* @var $types array */
 /* @var $users array */
+
+$this->registerJs("
+    $('#notice-code').on('change', function () {
+        console.log('ss');
+        var value = $(this).val();
+        $('#notice-text').closest('.form-group').find('.hint-block div').addClass('hide');
+        $('#code-param-' + value).removeClass('hide');
+    });
+");
 ?>
 
 <div class="notice-form">
@@ -26,7 +36,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'text')->textarea(['rows' => 6]) ?>
+    <?php $textHints = ''; ?>
+    <?php foreach ($codeParams as $paramName => $params) {
+        $class = 'hide';
+        if ($paramName == $model->code) {
+            $class = '';
+        }
+        $textHints .= "<div id='code-param-$paramName' class='$class'>Параметры: {" . implode('} {', $params) . "}</div>";
+    } ?>
+    <?= $form->field($model, 'text')->textarea(['rows' => 6])->hint($textHints) ?>
 
     <?= $form->field($model, 'types')->dropDownList(ArrayHelper::map($types, 'id', 'name'), ['multiple' => true]) ?>
 

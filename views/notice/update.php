@@ -5,6 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Notice */
 /* @var $codes array */
+/* @var $codeParams array */
 /* @var $types array */
 /* @var $users array */
 
@@ -20,6 +21,7 @@ $this->params['breadcrumbs'][] = 'Обновить';
     <?= $this->render('_form', [
         'model' => $model,
         'codes' => $codes,
+        'codeParams' => $codeParams,
         'types' => $types,
         'users' => $users,
     ]) ?>

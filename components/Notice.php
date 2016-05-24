@@ -85,4 +85,17 @@ class Notice extends Component implements BootstrapInterface
         }
         return $data;
     }
+
+    public function getEventsParams()
+    {
+        $noticeEvents = $this->getEvents();
+        $params = [];
+        foreach ($noticeEvents as $class => $events) {
+            $eventObject = new $class;
+            foreach ($events as $eventName) {
+                $params[$eventName] = array_keys($eventObject->getNoticeParams());
+            }
+        }
+        return $params;
+    }
 }

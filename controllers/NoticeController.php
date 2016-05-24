@@ -53,6 +53,7 @@ class NoticeController extends BaseController
             return $this->render('create', [
                 'model' => $model,
                 'codes' => Yii::$app->notice->prepareEventsDataForSelect(),
+                'codeParams' => Yii::$app->notice->getEventsParams(),
                 'types' => models\NoticeType::getList(),
                 'users' => models\User::getList(),
             ]);
@@ -75,6 +76,7 @@ class NoticeController extends BaseController
             return $this->render('update', [
                 'model' => $model,
                 'codes' => Yii::$app->notice->prepareEventsDataForSelect(),
+                'codeParams' => Yii::$app->notice->getEventsParams(),
                 'types' => models\NoticeType::getList(),
                 'users' => models\User::getList(),
             ]);
