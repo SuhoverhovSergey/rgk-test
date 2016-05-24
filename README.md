@@ -34,6 +34,28 @@ Notification System
 
 4. Добавить в модель триггеры на объявленные события.
 
+Установка
+============================
+
+Выполнить команды в корне проекта:
+
+```
+composer install
+php yii migrate/up
+```
+
+Добавить локальный файл конфигурации БД `app\config\db-local.php`.
+
+Пример содержимого файла:
+
+```php
+return [
+    'dsn' => 'mysql:host=localhost;dbname=rgk_test',
+    'username' => 'root',
+    'password' => 'root',
+];
+```
+
 
 Затраченное время: ~13ч.
 
