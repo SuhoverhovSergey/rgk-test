@@ -6,24 +6,18 @@ class m160524_091301_add_indexes extends Migration
 {
     public function up()
     {
-
+        $this->createIndex(
+            'idx-notice-code',
+            'notice',
+            'code'
+        );
     }
 
     public function down()
     {
-        echo "m160524_091301_add_indexes cannot be reverted.\n";
-
-        return false;
+        $this->dropIndex(
+            'idx-notice-code',
+            'notice'
+        );
     }
-
-    /*
-    // Use safeUp/safeDown to run migration code within a transaction
-    public function safeUp()
-    {
-    }
-
-    public function safeDown()
-    {
-    }
-    */
 }
